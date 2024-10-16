@@ -333,3 +333,1097 @@ end
        },
     }
 }
+local Options = getgenv().Linoria.Options;
+local Toggles = getgenv().Linoria.Toggles;
+
+local Addon = {
+	Name = "FunItems",
+	Title = "Fun Items",
+	Description = "Fun items, addon by upio",
+	Game = {
+		"doors/doors",
+		"doors/lobby"
+	},
+
+	Elements = {
+		{
+			Type = "Button",
+			Name = "ScannerScript",
+			Arguments = {
+				Text = 'Scanner Script',
+				Tooltip = 'Made by lsplash and refactored by upio',
+
+				Func = function(value)
+					_G.scanner_fps = _G.scanner_fps or 30
+					_G.disable_static = _G.disable_static or false
+					loadstring(game:HttpGet("https://raw.githubusercontent.com/notpoiu/Scripts/main/Scanner.lua"))()
+				end
+			},
+
+			Elements = { -- This is optional, again look in the Linoria Example.lua file to see how this works for the elements.
+				{
+					Type = "Button",
+					Name = "SeekGun",
+					Arguments = {
+						Text = 'Seek Gun',
+						Tooltip = 'Made by upio',
+						Func = function(value)
+							loadstring(game:HttpGet("https://raw.githubusercontent.com/notpoiu/Scripts/main/seekgun.lua"))()
+						end
+					}
+				}
+			}
+		},
+
+		{
+			Type = "Divider"
+		},
+
+        {
+            Type = "Input",
+            Name = "ScannerFPS",
+            Arguments = {
+                Default = '30',
+                Numeric = true,
+                Finished = true,
+                ClearTextOnFocus = true,
+                    
+                Text = 'Scanner FPS',
+                Tooltip = 'Changes the FPS of the scanner',
+
+                Placeholder = '30',
+
+                Callback = function(Value)
+                    _G.scanner_fps = tonumber(Value)
+                end
+            }
+        },
+
+		{
+			Type = "Toggle",
+			Name = "DisableStatic",
+			Arguments = {
+				Text = 'Disable Static',
+				Tooltip = 'Disables static in the scanner',
+
+				Enabled = false,
+
+				Callback = function(value)
+					_G.disable_static = value
+				end
+			}
+		}
+	}
+};
+
+return Addon;
+return {
+	Name = "durabilitybaronstacks",
+	Title = "Durability Bar on Stacks",
+	Description = "Replaces tools that have Stack durability into a durability bar. (Example 10x glowstick instead of having the x it will have the durability bar instead)",
+	Game = "*",
+
+	Elements = {
+		{
+			Type = "Button",
+			Name = "setnewnewymew",
+			Arguments = {
+				Text = 'Function',
+				Tooltip = 'Makes the the addon work lol',
+
+				Func = function()
+				if _G.DurabilityBarEverythingToolEnabled == true then
+				local newNotifSound = nil
+if not workspace:FindFirstChild("MPNOTIF_S") then
+	newNotifSound = Instance.new("Sound",workspace)
+else
+	newNotifSound = workspace.MPNOTIF_S
+end
+newNotifSound.Name = "MPNOTIF_S"
+newNotifSound.SoundId = "rbxassetid://4590662766"
+newNotifSound.Volume = 1
+newNotifSound:Play()
+				Library:Notify("Durability Script was already Executed!",5)
+else
+local newNotifSound = nil
+if not workspace:FindFirstChild("MPNOTIF_S") then
+	newNotifSound = Instance.new("Sound",workspace)
+else
+	newNotifSound = workspace.MPNOTIF_S
+end
+newNotifSound.Name = "MPNOTIF_S"
+newNotifSound.SoundId = "rbxassetid://4590662766"
+newNotifSound.Volume = 1
+newNotifSound:Play()
+	Library:Notify("Executed Durability Script!",5)
+end
+					loadstring(game:HttpGet('https://gist.githubusercontent.com/IdkMyNameLoll/0f11846af9c42a05c6b5190ca0b189e3/raw/c4a489e031fc74471bcd7190320ea54a4a7a7e35/DurabilityExtended'))()
+				end
+			},
+		}
+	}
+}
+return {
+	Name = "sososomuchmorphssss",
+	Title = "Morphs",
+	Description = "Some doors morphs (third person recommended)",
+	Game = "*",
+
+	Elements = {
+		{
+			Type = "Button",
+			Name = "figurebecome",
+			Arguments = {
+				Text = 'Figure',
+				Tooltip = 'Transforms you into figure',
+
+				Func = function()
+				   if _G.TransformedIntoAnyMorph == true then
+	return
+end
+_G.TransformedIntoAnyMorph = true
+
+local figureNew = game:GetObjects("rbxassetid://116871580020558")[1]
+--game:GetObjects("rbxassetid://116871580020558")[1]
+local giggles = {}
+local gigglesDed = Instance.new("Folder",workspace)
+local stompCooldown = false
+local footstepType = 0
+local footstepType2 = 0
+local canwalk = true
+
+local StompAnim
+local IdleAnim
+local WalkAnim
+local RunAnim
+
+gigglesDed.Name = "GigglesFake"
+figureNew.Parent = workspace
+
+if game.GameId == 6627207668 then
+	StompAnim = figureNew.AnimationController.Animator:LoadAnimation(figureNew.AnimsTest.Stomp)
+	IdleAnim = figureNew.AnimationController.Animator:LoadAnimation(figureNew.AnimsTest.Idle)
+	WalkAnim = figureNew.AnimationController.Animator:LoadAnimation(figureNew.AnimsTest.Walk)
+	RunAnim = figureNew.AnimationController.Animator:LoadAnimation(figureNew.AnimsTest.Run)
+else
+	StompAnim = figureNew.AnimationController.Animator:LoadAnimation(figureNew.Anims.Stomp)
+	IdleAnim = figureNew.AnimationController.Animator:LoadAnimation(figureNew.Anims.Idle)
+	WalkAnim = figureNew.AnimationController.Animator:LoadAnimation(figureNew.Anims.Walk)
+	RunAnim = figureNew.AnimationController.Animator:LoadAnimation(figureNew.Anims.Run)
+end
+
+IdleAnim:Play()
+
+WalkAnim:GetMarkerReachedSignal("Footstep"):Connect(function()
+	footstepSoundWalk()
+end)
+
+RunAnim:GetMarkerReachedSignal("Footstep"):Connect(function()
+	footstepSoundWalk()
+end)
+
+spawn(function()
+	game.Players.LocalPlayer.Character.Humanoid.Running:Connect(function(speed)
+		if speed >= 20 then
+			IdleAnim:Stop()
+			WalkAnim:Stop()
+			if RunAnim.IsPlaying == false then
+				RunAnim:Play()
+				RunAnim:AdjustSpeed(1.5)
+			end
+		elseif speed >= 5 then
+			IdleAnim:Stop()
+			RunAnim:Stop()
+			if WalkAnim.IsPlaying == false then
+				WalkAnim:Play()
+			end
+		else
+			WalkAnim:Stop()
+			RunAnim:Stop()
+			if IdleAnim.IsPlaying == false then
+				IdleAnim:Play()
+			end
+		end
+	end)
+end)
+
+function footstepSound()
+	if footstepType == 1 then
+		footstepType = 0
+		figureNew.LeftFoot.Footstep:Play()
+		figureNew.LeftFoot.FootstepLow:Play()
+	else
+		footstepType = 1
+		figureNew.RightFoot.Footstep:Play()
+		figureNew.RightFoot.FootstepLow:Play()
+	end
+end
+
+function footstepSoundWalk()
+	if canwalk == true then
+		if footstepType2 == 1 then
+			footstepType2 = 0
+			figureNew.LeftFoot.Footstep:Play()
+			figureNew.LeftFoot.FootstepLow:Play()
+		else
+			footstepType2 = 1
+			figureNew.RightFoot.Footstep:Play()
+			figureNew.RightFoot.FootstepLow:Play()
+		end
+	end
+end
+
+local function stompF()
+	if stompCooldown == false then
+		canwalk = false
+		game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+		StompAnim:Play()
+		getNearestWhileStomping()
+		StompAnim:GetMarkerReachedSignal("Stomp"):Connect(function()
+			figureNew.RightFoot.FootstepLowLoud:Play()
+		end)
+		StompAnim:GetMarkerReachedSignal("Footstep"):Connect(function()
+			footstepSound()
+		end)
+		StompAnim:GetMarkerReachedSignal("Roar"):Connect(function()
+			figureNew.Head.Growl:Play()
+		end)
+		StompAnim.Ended:Wait()
+		canwalk = true
+		game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+	end
+end
+
+local function addGiggle(giggle)
+	table.insert(giggles,giggle)
+	workspace.ChildRemoved:Connect(function(what)
+		if what == giggle then
+			table.remove(giggles,table.find(giggles,giggle))
+		end
+	end)
+end
+local function killTheCacaoBallButWhite(ahhball:Model)
+	if ahhball then
+		print("found lil bro")
+	end
+	if _G.StompGigglesEnabled == false then
+		warn("can't step giggle: stepping giggles is disabled")
+		return
+	end
+	local newBall = ahhball:Clone()
+	ahhball:Destroy()
+	newBall.Name = "StompedGiggle"..game.Players.LocalPlayer.Name
+	newBall.Parent = gigglesDed
+	newBall:SetAttribute("RealName","StompedGiggle")
+	newBall.Root.Sound_Laugh:Stop()
+	wait(0.3)
+	newBall.Root.Sound_Kill:Play()
+	wait(0.6)
+	print("GiggleFunction")
+	for _, GiggleThing in pairs(newBall:GetDescendants()) do
+		if GiggleThing:IsA("NoCollisionConstraint") or GiggleThing:IsA("BallSocketConstraint") then
+			GiggleThing:Destroy()
+		end
+	end
+	wait(5)
+	for _, GigglePart in pairs(newBall:GetDescendants()) do
+		if GigglePart:IsA("BasePart") then
+			game:GetService("TweenService"):Create(GigglePart,TweenInfo.new(5,Enum.EasingStyle.Linear,Enum.EasingDirection.In),{
+				Transparency = 1
+			}):Play()
+		end
+	end
+	wait(6)
+	newBall:Destroy()
+end
+function getNearestWhileStomping()
+	local nearest = 5
+	local nearestGiggle = nil
+	for _, Giggle in pairs(giggles) do
+		if Giggle:FindFirstChild("Root") then
+			print((figureNew.UserPivot.Position - Giggle.Root.Position).Magnitude)
+			if (figureNew.UserPivot.Position - Giggle.Root.Position).Magnitude <= nearest then
+				nearest = (figureNew.UserPivot.Position - Giggle.Root.Position).Magnitude
+				nearestGiggle = Giggle
+			end
+		else
+			table.remove(giggles,table.find(giggles,Giggle))
+		end
+	end
+	if nearestGiggle then
+		spawn(function()
+			killTheCacaoBallButWhite(nearestGiggle)
+		end)
+	end
+end
+local function checkIfIsAGiggleRagdoll(giggle)
+	spawn(function()
+		local okkkk = 0
+		repeat wait() print("trest" ..okkkk) okkkk += 1 until okkkk >= 20 or giggle:FindFirstChild("Root")
+		if giggle:FindFirstChild("Root") then
+			if giggle.Root:FindFirstChild("Sound_Kill") and giggle.Root:FindFirstChild("Sound_Laugh") and giggle:FindFirstChild("AnimationController") then
+				addGiggle(giggle)
+			end
+		end
+	end)
+end
+spawn(function()
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if game.Players.LocalPlayer.Character:FindFirstChild("Head") then
+			game.Players.LocalPlayer.Character:FindFirstChild("Head").Transparency = 1
+		end
+		if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+			game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").HipHeight = 2.3
+		end
+		figureNew:PivotTo(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame)
+		for _, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+			if v:IsA("BasePart") then
+				v.LocalTransparencyModifier = 1
+				for _, dadada in pairs(v:GetDescendants()) do
+					if dadada:IsA("Decal") or dadada:IsA("Texture") then
+						dadada.Transparency = 1
+					end
+				end
+			elseif v:IsA("Accessory") then
+				if v:FindFirstChild("Handle") then
+					v.Handle.Transparency = 1
+				end
+			end
+		end
+	end)
+end)
+
+workspace.ChildAdded:Connect(function(giggle)
+	checkIfIsAGiggleRagdoll(giggle)
+end)
+
+
+game.Players.LocalPlayer:GetMouse().KeyDown:Connect(function(key)
+	if key == "r" then
+		stompF()
+	end
+end)
+				end
+			},
+		},
+		{
+			Type = "Button",
+			Name = "gloombecome",
+			Arguments = {
+				Text = 'Gloombat',
+				Tooltip = 'Transforms you into a gloombat',
+
+				Func = function()
+				   if _G.TransformedIntoAnyMorph == true then
+	return
+end
+_G.TransformedIntoAnyMorph = true
+
+local figureNew = game:GetObjects("rbxassetid://72951473062980")[1]
+local testingPlace = false
+--game:GetObjects("rbxassetid://72951473062980")[1]
+
+figureNew.Parent = workspace
+
+local IdleAnim
+
+if game.GameId == 6627207668 then
+	IdleAnim = figureNew.AnimationController:LoadAnimation(figureNew.AnimIdleT)
+	testingPlace = true
+else
+	IdleAnim = figureNew.AnimationController:LoadAnimation(figureNew.AnimIdle)
+	testingPlace = false
+end
+
+IdleAnim:Play()
+
+if testingPlace == true then
+	for _, Sounds in pairs(figureNew.Main.Sounds["test game"]:GetChildren()) do
+		local newSound = Sounds:Clone()
+		newSound.Parent = figureNew.Main
+	end
+else
+	for _, Sounds in pairs(figureNew.Main.Sounds["DOORS"]:GetChildren()) do
+		local newSound = Sounds:Clone()
+		newSound.Parent = figureNew.Main
+	end
+end
+figureNew.Main.Sounds:Destroy()
+
+figureNew.Main.SoundFlying:Play()
+figureNew.Main.SoundFlyingClose:Play()
+
+spawn(function()
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if game.Players.LocalPlayer.Character:FindFirstChild("Head") then
+			game.Players.LocalPlayer.Character:FindFirstChild("Head").Transparency = 1
+		end
+		figureNew:PivotTo(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame)
+		for _, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+			if v:IsA("BasePart") then
+				v.LocalTransparencyModifier = 1
+				for _, dadada in pairs(v:GetDescendants()) do
+					if dadada:IsA("Decal") or dadada:IsA("Texture") then
+						dadada.Transparency = 1
+					end
+				end
+			elseif v:IsA("Accessory") then
+				if v:FindFirstChild("Handle") then
+					v.Handle.Transparency = 1
+				end
+			end
+		end
+	end)
+end)
+
+game.Players.LocalPlayer:GetMouse().KeyDown:Connect(function(key)
+	if key == "r" then
+		local randomRoar = math.random(1,2)
+		if randomRoar == 1 then
+			figureNew.Main.SoundRoar1.PlaybackSpeed = math.random(1,1.2)
+			figureNew.Main.SoundRoar1:Play()
+		else
+			figureNew.Main.SoundRoar2.PlaybackSpeed = math.random(1,1.2)
+			figureNew.Main.SoundRoar2:Play()
+		end
+	end
+end)
+				end
+			}
+		},
+		{
+			Type = "Button",
+			Name = "rushbecome",
+			Arguments = {
+				Text = 'Rush',
+				Tooltip = 'Transforms you into Rush',
+
+				Func = function()
+				   if _G.TransformedIntoAnyMorph == true then
+	return
+end
+_G.TransformedIntoAnyMorph = true
+
+local figureNew = game:GetObjects("rbxassetid://100327482330650")[1]
+local testingPlace = false
+--game:GetObjects("rbxassetid://100327482330650")[1]
+
+figureNew.Parent = workspace
+
+if game.GameId == 6627207668 then
+	testingPlace = true
+else
+	testingPlace = false
+end
+
+if testingPlace == true then
+	for _, Sounds in pairs(figureNew.Main.Sounds["test game"]:GetChildren()) do
+		local newSound = Sounds:Clone()
+		newSound.Parent = figureNew.Main
+	end
+else
+	for _, Sounds in pairs(figureNew.Main.Sounds["DOORS"]:GetChildren()) do
+		local newSound = Sounds:Clone()
+		newSound.Parent = figureNew.Main
+	end
+end
+figureNew.Main.Sounds:Destroy()
+
+figureNew.Main.Footsteps:Play()
+figureNew.Main.PlaySound:Play()
+
+spawn(function()
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if game.Players.LocalPlayer.Character:FindFirstChild("Head") then
+			game.Players.LocalPlayer.Character:FindFirstChild("Head").Transparency = 1
+		end
+		figureNew:PivotTo(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame)
+		for _, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+			if v:IsA("BasePart") then
+				v.LocalTransparencyModifier = 1
+				for _, dadada in pairs(v:GetDescendants()) do
+					if dadada:IsA("Decal") or dadada:IsA("Texture") then
+						dadada.Transparency = 1
+					end
+				end
+			elseif v:IsA("Accessory") then
+				if v:FindFirstChild("Handle") then
+					v.Handle.Transparency = 1
+				end
+			end
+		end
+	end)
+end)
+
+game.Players.LocalPlayer:GetMouse().KeyDown:Connect(function(key)
+	if key == "r" then
+		if figureNew.Main.Footsteps.IsPlaying == true then
+			figureNew.Main.Footsteps:Stop()
+		else
+			figureNew.Main.Footsteps:Play()
+		end
+		if figureNew.Main.PlaySound.IsPlaying == true then
+			figureNew.Main.PlaySound:Stop()
+		else
+			figureNew.Main.PlaySound:Play()
+		end
+	end
+end)
+				end
+			}
+		},
+		{
+			Type = "Button",
+			Name = "ambushbecome",
+			Arguments = {
+				Text = 'Ambush',
+				Tooltip = 'Transforms you into Ambush',
+
+				Func = function()
+				   if _G.TransformedIntoAnyMorph == true then
+	return
+end
+_G.TransformedIntoAnyMorph = true
+
+local figureNew = game:GetObjects("rbxassetid://98266611233960")[1]
+local testingPlace = false
+--game:GetObjects("rbxassetid://98266611233960")[1]
+
+figureNew.Parent = workspace
+
+if game.GameId == 6627207668 then
+	testingPlace = true
+else
+	testingPlace = false
+end
+
+figureNew.Main.Footsteps:Play()
+figureNew.Main.PlaySound:Play()
+
+spawn(function()
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if game.Players.LocalPlayer.Character:FindFirstChild("Head") then
+			game.Players.LocalPlayer.Character:FindFirstChild("Head").Transparency = 1
+		end
+		figureNew:PivotTo(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame)
+		for _, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+			if v:IsA("BasePart") then
+				v.LocalTransparencyModifier = 1
+				for _, dadada in pairs(v:GetDescendants()) do
+					if dadada:IsA("Decal") or dadada:IsA("Texture") then
+						dadada.Transparency = 1
+					end
+				end
+			elseif v:IsA("Accessory") then
+				if v:FindFirstChild("Handle") then
+					v.Handle.Transparency = 1
+				end
+			end
+		end
+	end)
+end)
+
+game.Players.LocalPlayer:GetMouse().KeyDown:Connect(function(key)
+	if key == "r" then
+		if figureNew.Main.Footsteps.IsPlaying == true then
+			figureNew.Main.Footsteps:Stop()
+		else
+			figureNew.Main.Footsteps:Play()
+		end
+		if figureNew.Main.PlaySound.IsPlaying == true then
+			figureNew.Main.PlaySound:Stop()
+		else
+			figureNew.Main.PlaySound:Play()
+		end
+	end
+end)
+				end
+			}
+		},
+		{
+			Type = "Button",
+			Name = "seekbecome",
+			Arguments = {
+				Text = 'Seek',
+				Tooltip = 'Transforms you into Seek',
+
+				Func = function()
+				   if _G.TransformedIntoAnyMorph == true then
+	return
+end
+_G.TransformedIntoAnyMorph = true
+
+local figureNew = game:GetObjects("rbxassetid://86341229891935")[1]
+local testingPlace = false
+local canWalk = true
+local introCD = false
+--game:GetObjects("rbxassetid://86341229891935")[1]
+
+figureNew.Parent = workspace
+
+if game.GameId == 6627207668 then
+	testingPlace = true
+else
+	testingPlace = false
+end
+
+local IntroAnim
+local PipeSlimeAnim
+local WalkAnim
+
+if testingPlace then
+	figureNew.SeekMusic.Intro.SoundId = "rbxassetid://138877504428539"
+	IntroAnim = figureNew.SeekRig.AnimationController.Animator:LoadAnimation(figureNew.AnimationsTest.minesintro)
+	WalkAnim = figureNew.SeekRig.AnimationController.Animator:LoadAnimation(figureNew.AnimationsTest.run)
+	PipeSlimeAnim = figureNew.FullPipe._SeekCutscene.AnimationController:LoadAnimation(figureNew.FullPipe._SeekCutscene.AnimationP)
+else
+	IntroAnim = figureNew.SeekRig.AnimationController.Animator:LoadAnimation(figureNew.Animations.minesintro)
+	WalkAnim = figureNew.SeekRig.AnimationController.Animator:LoadAnimation(figureNew.Animations.run)
+	PipeSlimeAnim = figureNew.FullPipe._SeekCutscene.AnimationController:LoadAnimation(figureNew.FullPipe._SeekCutscene.Animation)
+end
+
+WalkAnim:Play()
+WalkAnim:AdjustSpeed(0)
+
+spawn(function()
+	while wait() do
+		if canWalk == false then
+			figureNew.Figure.Footsteps:Stop()
+			figureNew.Figure.FootstepsFar:Stop()
+		end
+		if figureNew.Figure.Footsteps.IsPlaying == true then
+			if figureNew.Figure.FootstepsFar.IsPlaying == false then
+				figureNew.Figure.FootstepsFar:Play()
+			end
+		end
+		if figureNew.Figure.FootstepsFar.IsPlaying == true then
+			if figureNew.Figure.Footsteps.IsPlaying == false then
+				figureNew.Figure.Footsteps:Play()
+			end
+		end
+	end
+end)
+
+spawn(function()
+	game.Players.LocalPlayer.Character.Humanoid.Running:Connect(function(speed)
+		if speed >= 5 then
+			WalkAnim:AdjustSpeed(1)
+			if figureNew.Figure.Footsteps.IsPlaying == false and canWalk then
+				figureNew.Figure.Footsteps:Play()
+				figureNew.Figure.FootstepsFar:Play()
+			end
+		else
+			WalkAnim:AdjustSpeed(0)
+			if figureNew.Figure.Footsteps.IsPlaying == true and canWalk then
+				figureNew.Figure.Footsteps:Stop()
+				figureNew.Figure.FootstepsFar:Stop()
+			end
+		end
+	end)
+end)
+
+local function playIntro()
+	if introCD == false then
+		introCD = true
+		canWalk = false
+		game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+		figureNew.FullPipe._SeekCutscene.SlimeDrip1.Transparency = 0
+		figureNew.FullPipe._SeekCutscene.SlimeDrip2.Transparency = 0
+		figureNew.FullPipe.GrateCap.Circle.Transparency = 0
+		figureNew.FullPipe.GrateCap.Grate.Transparency = 0
+		figureNew.FullPipe.FigurePipe.PipeBase.Transparency = 0
+		figureNew.SeekRig.SeekPuddle.Transparency = 0
+		spawn(function()
+			wait(8.11)
+			for _, Beam in pairs(figureNew.SeekRig:GetChildren()) do
+				if Beam:IsA("Beam") and Beam.Name == "StringCheese" then
+					Beam.Enabled = true
+				end
+			end
+		end)
+		spawn(function()
+			wait(10.2)
+			for _, Beam in pairs(figureNew.SeekRig:GetChildren()) do
+				if Beam:IsA("Beam") and Beam.Name == "StringCheese" then
+					Beam.Enabled = false
+				end
+			end
+		end)
+		IntroAnim:Play()
+		PipeSlimeAnim:Play()
+		figureNew.SeekMusic.Intro:Play()
+		wait(IntroAnim.Length-2)
+		IntroAnim:Stop()
+		figureNew.FullPipe._SeekCutscene.SlimeDrip1.Transparency = 1
+		figureNew.FullPipe._SeekCutscene.SlimeDrip2.Transparency = 1
+		figureNew.FullPipe.GrateCap.Circle.Transparency = 1
+		figureNew.FullPipe.GrateCap.Grate.Transparency = 1
+		figureNew.FullPipe.FigurePipe.PipeBase.Transparency = 1
+		figureNew.SeekRig.SeekPuddle.Transparency = 1
+		canWalk = true
+		game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+		introCD = false
+	end
+end
+
+spawn(function()
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if game.Players.LocalPlayer.Character:FindFirstChild("Head") then
+			game.Players.LocalPlayer.Character:FindFirstChild("Head").Transparency = 1
+		end
+		figureNew:PivotTo(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame)
+		for _, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+			if v:IsA("BasePart") then
+				v.LocalTransparencyModifier = 1
+				for _, dadada in pairs(v:GetDescendants()) do
+					if dadada:IsA("Decal") or dadada:IsA("Texture") then
+						dadada.Transparency = 1
+					end
+				end
+			elseif v:IsA("Accessory") then
+				if v:FindFirstChild("Handle") then
+					v.Handle.Transparency = 1
+				end
+			end
+		end
+	end)
+end)
+
+game.Players.LocalPlayer:GetMouse().KeyDown:Connect(function(key)
+	if key == "r" then
+		playIntro()
+	elseif key == "t" then
+		figureNew.Figure.Scream:Play()
+	end
+end)
+				end
+			}
+		},
+		{
+			Type = "Divider"
+		},
+        {
+			Type = "Toggle",
+			Name = "FigureSGE",
+			Arguments = {
+				Text = 'Giggle Stomping Disabled',
+				Tooltip = '(only works with Figure morph)',
+
+				Enabled = false,
+
+				Callback = function(value)
+					_G.StompGigglesEnabled = not value
+					print("Enabled: "..tostring(not value))
+				end
+			}
+		}
+	}
+}
+return {
+	Name = "potientsararwa",
+	Title = "More Items",
+	Description = "Re-created fanmade items",
+	Game = "doors/doors",
+
+	Elements = {
+		{
+			Type = "Button",
+			Name = "givgivgivmeeeeee1",
+			Arguments = {
+				Text = 'Bottle Of Moonlight',
+				Tooltip = 'When drinked, guiding light will possess you so you can fly (25 is duration).',
+
+				Func = function()
+				   local TweenService_upvr = game:GetService("TweenService")
+local MainUI_upvr = nil
+if not game.Players.LocalPlayer.PlayerGui:FindFirstChild("MainUI") then repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("MainUI") end
+MainUI_upvr = game.Players.LocalPlayer.PlayerGui.MainUI
+local toolNew = nil
+if game.GameId == 6627207668 then
+	toolNew = game.ReplicatedStorage["Moon Bottle"]:Clone()
+else
+	toolNew = game:GetObjects("rbxassetid://106070375280557")[1]
+end
+local newCloneEffect = MainUI_upvr.MainFrame.Healthbar.Effects.HerbGreenEffect:Clone()
+local drinked = false
+local rared = false
+local ended = false
+newCloneEffect.Name = "GuidingLightPotion"
+newCloneEffect.ImageColor3 = Color3.fromRGB(255,255,255)
+if math.random(1,50) == 1 then
+	newCloneEffect.Image = "rbxassetid://116152180072403"
+	rared = true
+else
+	newCloneEffect.Image = "rbxassetid://12771067678"
+	newCloneEffect.ImageColor3 = Color3.fromRGB(0, 255, 255)
+end
+newCloneEffect.Visible = false
+newCloneEffect.Parent = MainUI_upvr.MainFrame.Healthbar.Effects
+
+local ohhmydayz = game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):LoadAnimation(toolNew.bals.idle)
+local ohhmydayz2 = game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):LoadAnimation(toolNew.bals.open)
+local ohhmydayz3 = game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):LoadAnimation(toolNew.Animations.open)
+
+spawn(function()
+	while wait() do
+		if drinked == true and ended == false then
+			if rared == true then
+				game.Players.LocalPlayer.Character:SetAttribute("CanJump",true)
+			else
+				ended = true
+				if game.GameId == 6627207668 then
+					local newTool = script.flyTest:Clone()
+					newTool.Parent = game.Players.LocalPlayer.Backpack
+					newTool.Enabled = true
+				else
+				--mspaint script devs please verify the addon there is loadstring because its to make the player fly (check the link if u dont believe)
+					loadstring(game:HttpGet('https://gist.githubusercontent.com/IdkMyNameLoll/e7973053bf9baa5fd89e15e1c3766496/raw/ead7b7131370775774a41cb7d0824909bf1959f8/flyTestGuidingLightbottle'))()
+				end
+			end
+		end
+	end
+end)
+
+local function EffectOnScreen()
+	drinkSoundPlay()
+	newCloneEffect.Visible = true
+	spawn(function()
+		local clone = MainUI_upvr.MainFrame.WhiteVignette:Clone()
+		if clone then
+			local clone_2 = clone:Clone()
+			clone_2.Name ..= "Live"
+			clone_2.ImageColor3 = Color3.fromRGB(142, 236, 255)
+			clone_2.ImageTransparency = 1
+			clone_2.Parent = MainUI_upvr.MainFrame
+			clone_2.Visible = true
+			TweenService_upvr:Create(clone_2, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
+				ImageTransparency = 0;
+			}):Play()
+			wait(5)
+			TweenService_upvr:Create(clone_2, TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {
+				Size = UDim2.new(1.5, 0, 1.5, 0);
+			}):Play()
+			wait(0.5)
+			TweenService_upvr:Create(clone_2, TweenInfo.new(4.5, Enum.EasingStyle.Quart, Enum.EasingDirection.InOut), {
+				ImageTransparency = 1;
+			}):Play()
+			wait(4.5)
+			clone_2:Destroy()
+		end
+	end)
+end
+
+function drinkSoundPlay()
+	local newSound = nil
+	if not workspace:FindFirstChild("DrinkPotionAddonSound") then
+		newSound = Instance.new("Sound",workspace)
+		newSound.Name = "DrinkPotionAddonSound"
+		if game.GameId == 6627207668 then
+			newSound.SoundId = "rbxassetid://103799151859408"
+		else
+			newSound.SoundId = "rbxassetid://18869124055"
+		end
+	else
+		newSound = workspace:WaitForChild("DrinkPotionAddonSound")
+	end
+	newSound:Play()
+end
+
+toolNew.Parent = game.Players.LocalPlayer.Backpack
+
+toolNew.Equipped:Connect(function()
+	if game.GameId == 6627207668 then
+		ohhmydayz:Play()
+	end
+end)
+toolNew.Unequipped:Connect(function()
+	if game.GameId == 6627207668 then
+		ohhmydayz:Stop()
+	end
+end)
+
+toolNew.Activated:Connect(function()
+	if drinked == false then
+		drinked = true
+		EffectOnScreen()
+		if game.GameId == 6627207668 then
+			ohhmydayz2:Play()
+			ohhmydayz2.Ended:Wait()
+		else
+			ohhmydayz3:Play()
+			ohhmydayz3.Ended:Wait()
+		end
+		toolNew:Destroy()
+	end
+end)
+				end
+			},
+		},
+		{
+			Type = "Button",
+			Name = "givgivgivmeeeeee2",
+			Arguments = {
+				Text = 'Bottle Of Spiral light',
+				Tooltip = 'When drinked, Mischievious Light will kill you. (yes thats all)',
+
+				Func = function()
+				    local TweenService_upvr = game:GetService("TweenService")
+local MainUI_upvr = nil
+if not game.Players.LocalPlayer.PlayerGui:FindFirstChild("MainUI") then repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("MainUI") end
+MainUI_upvr = game.Players.LocalPlayer.PlayerGui.MainUI
+local toolNew = nil
+if game.GameId == 6627207668 then
+	toolNew = game.ReplicatedStorage["Spiral Bottle"]:Clone()
+else
+	toolNew = game:GetObjects("rbxassetid://125377922223551")[1]
+end
+local newCloneEffect = MainUI_upvr.MainFrame.Healthbar.Effects.HerbGreenEffect:Clone()
+local drinked = false
+local okstop = false
+newCloneEffect.Name = "EvilLightPotion"
+newCloneEffect.ImageColor3 = Color3.fromRGB(255,255,255)
+newCloneEffect.Image = "rbxassetid://74062787660956"
+newCloneEffect.Visible = false
+newCloneEffect.Parent = MainUI_upvr.MainFrame.Healthbar.Effects
+
+local highlight = Instance.new("Highlight")
+
+local heartBeat = Instance.new("Sound",workspace)
+heartBeat.Name = "_HeartBeatEvil"
+heartBeat.Volume = 1
+heartBeat.SoundId = "rbxassetid://7188240609"
+heartBeat.Looped = true
+
+local ohhmydayz = game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):LoadAnimation(toolNew.bals.idle)
+local ohhmydayz2 = game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):LoadAnimation(toolNew.bals.open)
+local ohhmydayz3 = game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):LoadAnimation(toolNew.Animations.open)
+
+spawn(function()
+	while wait() do
+		if drinked == true then
+			if okstop == false then
+				okstop = true
+				local newColorEcction = Instance.new("ColorCorrectionEffect",game.Lighting)
+				wait(4)
+				if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health > 10 then
+					game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health = 10
+				end
+				heartBeat:Play()
+				TweenService_upvr:Create(newColorEcction, TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {
+					Brightness = 0.3,
+					TintColor = Color3.fromRGB(255,0,0)
+				}):Play()
+				wait(5)
+				newColorEcction:Destroy()
+				if game.ReplicatedStorage:FindFirstChild("GameStats") then
+					if game.ReplicatedStorage.GameStats:FindFirstChild("Player_"..game.Players.LocalPlayer.Name) then
+						game.ReplicatedStorage.GameStats["Player_"..game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Mischievious Light"
+					end
+				end
+				game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health = 0
+				heartBeat:Stop()
+				highlight:Destroy()
+			end
+		end
+	end
+end)
+
+local function EffectOnScreen()
+	drinkSoundPlay()
+	newCloneEffect.Visible = true
+	highlight.Parent = game.Players.LocalPlayer.Character
+	spawn(function()
+		local clone = MainUI_upvr.MainFrame.WhiteVignette:Clone()
+		if clone then
+			local clone_2 = clone:Clone()
+			clone_2.Name ..= "Live"
+			clone_2.ImageColor3 = Color3.fromRGB(255, 0, 4)
+			clone_2.ImageTransparency = 1
+			clone_2.Parent = MainUI_upvr.MainFrame
+			clone_2.Visible = true
+			TweenService_upvr:Create(clone_2, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
+				ImageTransparency = 0;
+			}):Play()
+			wait(5)
+			TweenService_upvr:Create(clone_2, TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {
+				Size = UDim2.new(1.5, 0, 1.5, 0);
+			}):Play()
+			wait(0.5)
+			TweenService_upvr:Create(clone_2, TweenInfo.new(4.5, Enum.EasingStyle.Quart, Enum.EasingDirection.InOut), {
+				ImageTransparency = 1;
+			}):Play()
+			wait(4.5)
+			clone_2:Destroy()
+		end
+	end)
+end
+
+function drinkSoundPlay()
+	local newSound = nil
+	if not workspace:FindFirstChild("DrinkPotionAddonSound") then
+		newSound = Instance.new("Sound",workspace)
+		newSound.Name = "DrinkPotionAddonSound"
+		if game.GameId == 6627207668 then
+			newSound.SoundId = "rbxassetid://103799151859408"
+		else
+			newSound.SoundId = "rbxassetid://18869124055"
+		end
+	else
+		newSound = workspace:WaitForChild("DrinkPotionAddonSound")
+	end
+	newSound:Play()
+end
+
+toolNew.Parent = game.Players.LocalPlayer.Backpack
+
+toolNew.Equipped:Connect(function()
+	if game.GameId == 6627207668 then
+		ohhmydayz:Play()
+	end
+end)
+toolNew.Unequipped:Connect(function()
+	if game.GameId == 6627207668 then
+		ohhmydayz:Stop()
+	end
+end)
+
+toolNew.Activated:Connect(function()
+	if drinked == false then
+		drinked = true
+		EffectOnScreen()
+		if game.GameId == 6627207668 then
+			ohhmydayz2:Play()
+			ohhmydayz2.Ended:Wait()
+		else
+			ohhmydayz3:Play()
+			ohhmydayz3.Ended:Wait()
+		end
+		toolNew:Destroy()
+	end
+end)
+				end
+			}
+		}
+	}
+}
+return {
+	Name = "statueV2",
+	Title = "Interactable Courtyard Statue",
+	Description = "Courtyard Statue stand can be interacted and a cool animation will be played.",
+	Game = "*",
+
+	Elements = {
+		{
+			Type = "Button",
+			Name = "setnewnewymew",
+			Arguments = {
+				Text = 'Function',
+				Tooltip = 'After pressed, when you will reach the courtyard the statue stand will be interactable.',
+
+				Func = function()
+					loadstring(game:HttpGet('https://gist.githubusercontent.com/IdkMyNameLoll/72bd9936249bae4b04ddbd0e05c9b323/raw/3847f62fe7fe2af3e1450fe0f6083b6293a3cb68/cpuntyardorsmth'))()
+				end
+			},
+		}
+	}
+}
