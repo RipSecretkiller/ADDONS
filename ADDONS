@@ -1,3 +1,17 @@
+local Options = getgenv().Linoria.Options;
+local Toggles = getgenv().Linoria.Toggles;
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+return {
+    Name = "RIP_SECRETKILLER ADDONS", 
+    Title = "MADE BY RIP",
+    Description = "BEST ADDONS",
+    Game = "*", 
+    Elements = {
+        {
 Type = "Button",
             Name = "Classic Rocket Launcher",
             Arguments = {
@@ -11,7 +25,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/notpoiu/Scripts/main/
     },
 
 {
-Type = "Button",
+            Type = "Button",
             Name = "Physics Gun",
             Arguments = {
                 Text = 'Physics Gun',
@@ -24,7 +38,7 @@ Type = "Button",
     },
 
 {
-Type = "Button",
+            Type = "Button",
             Name = "BARREL",
             Arguments = {
                 Text = 'Get Barrel by upio',
@@ -37,7 +51,7 @@ Type = "Button",
      },
 
 {
-Type = "Button",
+            Type = "Button",
 			Name = "grumblespawner",
 			Arguments = {
 				Text = 'Grumble Spawner By Ibvladimiro',
